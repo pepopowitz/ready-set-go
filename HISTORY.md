@@ -14,3 +14,10 @@ I used a mish mash of resources to get started with this app.
 
 - Setting up our Phoenix application
 - Using TypeScript with Phoenix
+
+## Notes
+
+- Run locally: `mix phx.server`
+- Start postgres: `docker compose up -d`
+- List all databases: `psql -h localhost -l -U postgres`
+- Local db connection: `psql -h localhost -U postgres`
