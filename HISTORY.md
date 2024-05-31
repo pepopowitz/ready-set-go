@@ -13,4 +13,4 @@ I used a mish mash of resources to get started with this app.
 2. Set up a new phoenix/react app from https://blog.logrocket.com/to-do-list-phoenix-react-typescript/
 
 - Setting up our Phoenix application
--
+- Using TypeScript with Phoenix
