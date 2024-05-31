@@ -25,6 +25,8 @@ config :ready_set_go, ReadySetGoWeb.Endpoint,
   debug_errors: true,
   secret_key_base: "SUncCrGMc72hHbwH53+DFTrGGB9Qp8tq7+CAxxjD73ne0NGf4FNcutr5VAxGEQpt",
   watchers: [
+    node:
+      ~w(assets/node_modules/typescript/bin/tsc --project assets --noEmit --watch --preserveWatchOutput --pretty),
     esbuild: {Esbuild, :install_and_run, [:ready_set_go, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:ready_set_go, ~w(--watch)]}
   ]
