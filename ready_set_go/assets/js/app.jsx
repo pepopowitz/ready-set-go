@@ -23,7 +23,10 @@ import { LiveSocket } from 'phoenix_live_view';
 import topbar from '../vendor/topbar';
 
 // sjh - imports
+import React from 'react';
+import ReactDOM from 'react-dom';
 import hello from './hello';
+import Greeting from './greeting';
 
 // phoenix things
 let csrfToken = document
@@ -50,3 +53,5 @@ window.liveSocket = liveSocket;
 
 // sjh starting here
 document.querySelector('#hello').innerHTML = hello('frienderino');
+const greetingRoot = ReactDOM.createRoot(document.getElementById('greeting'));
+greetingRoot.render(<Greeting name="special bunches" />);
