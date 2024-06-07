@@ -18,6 +18,8 @@ defmodule ReadySetGoWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    
+    resources "/events", EventController
   end
 
   # Other scopes may use custom stacks.
