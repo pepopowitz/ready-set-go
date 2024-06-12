@@ -1,11 +1,13 @@
 defmodule ReadySetGoWeb.TrackLive.Index do
   use ReadySetGoWeb, :live_view
-
+  alias ReadySetGo.PubSub
   alias ReadySetGo.TrackerSpace
   alias ReadySetGo.TrackerSpace.Tracker
 
   @impl true
+
   def mount(_params, _session, socket) do
+    if connected?(socket), do: TrackerSpace.subscribe()
     {:ok, assign(socket, :trackers, TrackerSpace.list_trackers())}
   end
 
@@ -14,6 +16,10 @@ defmodule ReadySetGoWeb.TrackLive.Index do
     tracker = TrackerSpace.get_tracker!(id)
     TrackerSpace.update_tracker(tracker, %{start_time: DateTime.utc_now()})
 
+    {:noreply, assign(socket, :trackers, TrackerSpace.list_trackers())}
+  end
+
+  def handle_info({:tracker_updated, _event}, socket) do
     {:noreply, assign(socket, :trackers, TrackerSpace.list_trackers())}
   end
 

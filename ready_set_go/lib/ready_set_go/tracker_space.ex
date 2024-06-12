@@ -8,6 +8,22 @@ defmodule ReadySetGo.TrackerSpace do
 
   alias ReadySetGo.RaceSpace.Event
 
+  # pubsub stuff so other liveviews can see the updates
+  alias Phoenix.PubSub
+
+  def subscribe() do
+    PubSub.subscribe(ReadySetGo.PubSub, "ready_set_go")
+  end
+
+  def notify({:ok, tracker}, event) do
+    IO.puts("sjhsjhsjh")
+    IO.puts(event)
+    PubSub.broadcast(ReadySetGo.PubSub, "ready_set_go", {event, tracker})
+  end
+
+  def notify({:error, reason}, _event), do: {:error, reason}
+  ## end pubsub stuff
+
   @doc """
   Returns the list of trackers.
 
@@ -71,6 +87,7 @@ defmodule ReadySetGo.TrackerSpace do
     tracker
     |> Event.changeset(attrs)
     |> Repo.update()
+    |> notify(:tracker_updated)
   end
 
   @doc """
