@@ -22,7 +22,7 @@ I used a mish mash of resources to get started with this app.
 - Using React with Phoenix
 - Creating the todo-list schema
 
-  - Another helpful doc at this point: https://medium.com/@breathethenmove/learning-phoenix-part-2-mix-tasks-and-ecto-25a49b456749
+  - Except I really followed this guide instead, because I knew I wanted the HTML scaffold instead of API: https://medium.com/@breathethenmove/learning-phoenix-part-2-mix-tasks-and-ecto-25a49b456749
 
   - I started with a `race` schema instead of todo
 
@@ -67,6 +67,55 @@ I used a mish mash of resources to get started with this app.
     - rolled it back again & made things optional, by removing the start_time/end_time fields from `validate_required` in `event.ex#changeset`:
       - `|> validate_required([:name, :start_time, :end_time])` to `|> validate_required([:name])`
 
+3. Sockets and Channels
+
+- Followed https://hexdocs.pm/phoenix/channels.html#generating-a-socket
+
+  - Generate a RaceSpace socket:
+
+    ```
+    ❯ mix phx.gen.socket RaceSpace
+    * creating lib/ready_set_go_web/channels/race_space_socket.ex
+    * creating assets/js/race_space_socket.js
+
+    Add the socket handler to your `lib/ready_set_go_web/endpoint.ex`, for example:
+
+        socket "/socket", ReadySetGoWeb.RaceSpaceSocket,
+          websocket: true,
+          longpoll: false
+
+    For the front-end integration, you need to import the `race_space_socket.js`
+    in your `assets/js/app.js` file:
+
+        import "./race_space_socket.js"
+    ```
+
+  - I think the docs are missing the step to create a channel?????
+
+    ```
+    ❯ mix phx.gen.channel Event
+    * creating lib/ready_set_go_web/channels/event_channel.ex
+    * creating test/ready_set_go_web/channels/event_channel_test.exs
+    * creating test/support/channel_case.ex
+
+    The default socket handler - ReadySetGoWeb.UserSocket - was not found.
+
+    Do you want to create it? [Yn] n
+
+    To create it, please run the mix task:
+
+        mix phx.gen.socket User
+
+    Then add the channel to the newly created file, at `lib/ready_set_go_web/channels/user_socket.ex`:
+
+        channel "event:lobby", ReadySetGoWeb.EventChannel
+    ```
+
+    - I'm not sure why it doesn't let me specify the associated socket in the command, maybe it does?
+
+    - Whoa, I think I misunderstood! Channels/sockets are different than Liveview. Liveview looks very similar to hotwire/ajax/asp.net updatepanels? I think it will actually work really well so I'm going to restart with that.
+    -
+
 ## Notes
 
 - Start postgres: `docker compose up -d`
@@ -77,6 +126,9 @@ I used a mish mash of resources to get started with this app.
 - run inside iex: `iex -S mix phx.server`
 - re: phx.gen.json vs phx.gen.html -- if I want API endpoints, use .json. If I want scaffolded forms, use .html.
   - I _think_ I can add .json after I add .html for the same resource if I need both?
+    - nope, at least not in the same context.
+    - and even in a different context, it will overwrite controllers!
+    - That's dumb. If a "context" is a logical namespace, it should namespace it physically, too.
 - naive_datetime_usec vs utc_datetime_usec -- I'm choosing naive because we will all be in the same time zone for this event.
 - `mix ecto.rollback` to roll back a schema migration
 - running `mix test` will auto-run migrations against the test db, but if I want to do something with migrations against test db manually, use an env variable: `MIX_ENV=test mix ecto.rollback`
@@ -123,7 +175,7 @@ finish-time:naive_datetime_usec
 - connecting react components to liveview
 - deployment
 
-1. scaffold a crud operation to get the concept of a "race"
+1. [x] scaffold a crud operation to get the concept of a "race"
 2. view a race via liveview (phoenix way)
 3. view a race via liveview (react way)
 4. update a race via liveview (react way)

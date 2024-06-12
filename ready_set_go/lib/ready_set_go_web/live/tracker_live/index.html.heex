@@ -1,0 +1,43 @@
+<.header>
+  Listing Trackers
+  <:actions>
+    <.link patch={~p"/trackers/new"}>
+      <.button>New Tracker</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="trackers"
+  rows={@streams.trackers}
+  row_click={fn {_id, tracker} -> JS.navigate(~p"/trackers/#{tracker}") end}
+>
+  <:col :let={{_id, tracker}} label="Name"><%= tracker.name %></:col>
+  <:col :let={{_id, tracker}} label="Start time"><%= tracker.start_time %></:col>
+  <:col :let={{_id, tracker}} label="End time"><%= tracker.end_time %></:col>
+  <:action :let={{_id, tracker}}>
+    <div class="sr-only">
+      <.link navigate={~p"/trackers/#{tracker}"}>Show</.link>
+    </div>
+    <.link patch={~p"/trackers/#{tracker}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, tracker}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: tracker.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="tracker-modal" show on_cancel={JS.patch(~p"/trackers")}>
+  <.live_component
+    module={ReadySetGoWeb.TrackerLive.FormComponent}
+    id={@tracker.id || :new}
+    title={@page_title}
+    action={@live_action}
+    tracker={@tracker}
+    patch={~p"/trackers"}
+  />
+</.modal>
