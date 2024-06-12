@@ -114,7 +114,22 @@ I used a mish mash of resources to get started with this app.
     - I'm not sure why it doesn't let me specify the associated socket in the command, maybe it does?
 
     - Whoa, I think I misunderstood! Channels/sockets are different than Liveview. Liveview looks very similar to hotwire/ajax/asp.net updatepanels? I think it will actually work really well so I'm going to restart with that.
-    -
+
+  - RESTART
+    - https://www.youtube.com/watch?v=GsOcNO0NlHU
+    - 1. do I want user auth? skipping for now but there's a generator for it.
+    - 2. `mix phx.gen.live RaceSpace Event events ...` -- same as before but with .live, and then I cleaned up the overlap.
+
+4. Liveview
+
+- at some point I think I decided that I want a LiveView controller, but I also need to use PubSub to push updates to other LiveView users.
+- I started by attempting to implement a liveview controller that does basically the same thing as my Event scaffold.
+  - `mix phx.gen.live TrackerSpace Tracker trackers name:string start_time:naive_datetime_usec end_time:naive_datetime_usec`
+  - I then pointed the generated TrackerSpace implementation functions at the existing Event entity, and removed the overlap.
+  - this seemed to work fine, but I wanted something more specific to my use case of a liveview that can do simple edits, and pubsub so that all active liveviews see the edits realtime.
+- I started over with https://github.com/dwyl/phoenix-liveview-chat-example.
+  - I asked Copilot to write the `def handle_event("update_start_time"` function for me, and it nailed it.
+  - now I have a working liveview that does simple inline edits to the "start time" property.
 
 ## Notes
 

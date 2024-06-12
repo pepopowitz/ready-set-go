@@ -1,0 +1,11 @@
+<h1>Track events</h1>
+
+<ul id='msg-list' phx-update="stream">
+  <%= for event <- @trackers do %>
+    <li id={"event-#{event.id}"}>
+      <b><%= event.name %>:</b>
+      <%= event.start_time %>
+      <button phx-click="update_start_time" phx-value-id={event.id}>Update</button>
+    </li>
+  <% end %>
+</ul>

@@ -22,6 +22,7 @@ defmodule ReadySetGoWeb.Router do
     resources("/events", EventController)
 
     live("/trackers", TrackerLive.Index, :index)
+    live("/track", TrackLive.Index, :index)
   end
 
   # Other scopes may use custom stacks.
