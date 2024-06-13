@@ -130,6 +130,14 @@ I used a mish mash of resources to get started with this app.
 - I started over with https://github.com/dwyl/phoenix-liveview-chat-example.
   - I asked Copilot to write the `def handle_event("update_start_time"` function for me, and it nailed it.
   - now I have a working liveview that does simple inline edits to the "start time" property.
+- next I need to subscribe to something so that other users see the edits.
+  - this also came from https://github.com/dwyl/phoenix-liveview-chat-example
+
+5. Deployment
+
+- https://hexdocs.pm/phoenix/gigalixir.html
+- I did this to link the project locally to my gigalixir app: `gigalixir git:remote ready-set-go-test`
+  - I set versions in tool-versions instead of whatever that doc recommends, because this said so: https://www.gigalixir.com/docs/getting-started-guide/phoenix-releases-deploy
 
 ## Notes
 
