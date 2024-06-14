@@ -19,6 +19,7 @@ defmodule ReadySetGoWeb.TrackLive.Index do
     {:noreply, assign(socket, :trackers, TrackerSpace.list_trackers())}
   end
 
+  @impl true
   def handle_info({:tracker_updated, _event}, socket) do
     {:noreply, assign(socket, :trackers, TrackerSpace.list_trackers())}
   end
