@@ -138,6 +138,75 @@ I used a mish mash of resources to get started with this app.
 - https://hexdocs.pm/phoenix/gigalixir.html
 - I did this to link the project locally to my gigalixir app: `gigalixir git:remote ready-set-go-test`
   - I set versions in tool-versions instead of whatever that doc recommends, because this said so: https://www.gigalixir.com/docs/getting-started-guide/phoenix-releases-deploy
+- the hexdocs re: running migrations did not work. Apparently when deploying via elixir releases, there is no `mix` available so `gigalixir run mix ecto.migrate` doesn't work.
+  - the gigalixir docs tell me to use a different command: https://www.gigalixir.com/docs/database#runnning-migrations
+    - first, add an ssh key to gigalixir. Those instructions reference an ssh key that I don't have (id*rsa.pub), but https://www.gigalixir.com/docs/runtime tells me I can use a key that I \_do* have: `gigalixir account:ssh_keys:add "$(cat ~/.ssh/id_ed25519.pub)"`
+    - then, I tried to run the gigalixir recommended command: `gigalixir ps:migrate`
+    - that kept crashing my app! It would run out of memory every time.
+      - I was able to identify this by tailing the logs: `gigalixir logs`
+    - but apparently I could scale it in the gigalixir console for free? I'm not sure what the upper limit is, but I bumped the app from 0.3 gb to 0.5 gb. Then the migrations ran!
+- and now I have a running app at:
+  - https://ready-set-go-test.gigalixirapp.com/
+  - https://ready-set-go-test.gigalixirapp.com/events to add/edit events
+  - https://ready-set-go-test.gigalixirapp.com/track for liveview!
+
+6. More data
+
+- Adding a Wave entity
+  - `mix phx.gen.html RaceSpace Wave waves event_id:references:events race_index:integer start_time:naive_datetime_usec end_time:naive_datetime_usec`
+    - note the `event_id` for a 1:m relationship
+    - and add the resource to the router:
+      - `resources "/waves", WaveController`
+    - and then I also added associations to models:
+      - `has_many :waves, ReadySetGo.RaceSpace.Wave`
+      - `belongs_to :event, ReadySetGo.RaceSpace.Event`
+    - I also had to remove the `event_id` field that had been added to the Wave model
+      - `field :event_id, :id`
+      - but _add_ it to the `cast` and `validate_required` calls in `changeset`
+    - and then run the migration
+      - `mix ecto.migrate`
+    - ## I also added a field to the forms:
+    - copilot told me how to do most of this, but https://www.alanvardy.com/post/associations-phoenix described the things I was missing.
+- Displaying an association in the scaffolded forms
+
+  - I had to do a lot of manual twiddling to get the associated event showing on a wave.
+  - New
+
+    - in WaveController#new, look up the events that can be associated to, map them to name/id tuples, and then pass them in the `assigns` map:
+
+      ```
+      events = RaceSpace.list_events()
+        |> Enum.map(&{&1.name, &1.id})
+
+      render(conn, :new, changeset: changeset, events: events)
+      ```
+
+    - pass the events through the `new` template into `wave_form`: `<.wave_form ... events={@events} />`
+    - add a select field to `wave_form` for the events:
+      ```
+      <.input field={f[:event_id]} type="select" label="Event"
+        options={@events} />
+      ```
+
+  - Index
+    - tell the repo to preload the associated event, so I can drill over to it: `Repo.all(Wave) |> Repo.preload(:event)`
+    - drill over to the event name in the table: `<:col :let={wave} label="Event"><%= wave.event.name %></:col>`
+  - Show
+    - same thing as Index, mostly
+    - instead of preloading in RaceSpace (context), I did it in WaveController, like this: `wave = RaceSpace.get_wave!(id) |> Repo.preload(:event)`
+    - I'm not sure how much I like accessing Repo in the WaveController.
+    - This seems like a really nice solution: https://elixirforum.com/t/where-do-you-preload-associations/45031/14
+    - and then render the event name in the view, like in Index: `<:item title="Event"><%= @wave.event.name %></:item>`
+  - Edit
+
+    - because New added `@events` to the shared `wave_form`, I need to add that to the assigns in the controller again
+    - this time I extracted a function named `get_events()` and called that from both new and edit.
+    - and I also needed to pass the events through `edit.html.heex`.
+
+  - Update
+    - no changes
+  - Delete
+    - no changes
 
 ## Notes
 
@@ -157,7 +226,7 @@ I used a mish mash of resources to get started with this app.
 - running `mix test` will auto-run migrations against the test db, but if I want to do something with migrations against test db manually, use an env variable: `MIX_ENV=test mix ecto.rollback`
 - annoying thing -- prettier wants me to use parens for every function call; phx generates ruby-like calls without parens. How do I get prettier to use the phx standard?
 - a nice article about pros/cons of elixir/phoenix ecosystem: https://www.sean-lawrence.com/things-to-consider-before-starting-an-elixir-phoenix-project/
--
+- deploy to gigalixir: `git push gigalixir`
 
 ## Schema
 
@@ -199,7 +268,17 @@ finish-time:naive_datetime_usec
 - deployment
 
 1. [x] scaffold a crud operation to get the concept of a "race"
-2. view a race via liveview (phoenix way)
-3. view a race via liveview (react way)
-4. update a race via liveview (react way)
-5. deploy
+2. [x] view a race via liveview (phoenix way)
+3. ~view a race via liveview (react way)~ I don't think I need this!
+4. [x] update a race via liveview (react way)
+5. [x] deploy
+6. Add waves
+   1. what does the scaffold editor look like when there's a relationship?
+7. Add athletes
+   1. how to list relationships in the tracker?
+8. interactivity for full tracker
+   1. move to next step
+   2. move back a step
+   3. how do I make the transitions not jarring?
+9. ci deployment?
+10.

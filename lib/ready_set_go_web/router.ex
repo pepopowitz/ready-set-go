@@ -19,7 +19,8 @@ defmodule ReadySetGoWeb.Router do
 
     get("/", PageController, :home)
 
-    resources("/events", EventController)
+    resources "/events", EventController
+    resources "/waves", WaveController
 
     live("/trackers", TrackerLive.Index, :index)
     live("/track", TrackLive.Index, :index)
