@@ -272,13 +272,14 @@ finish-time:naive_datetime_usec
 3. ~view a race via liveview (react way)~ I don't think I need this!
 4. [x] update a race via liveview (react way)
 5. [x] deploy
-6. Add waves
-   1. what does the scaffold editor look like when there's a relationship?
-7. Add athletes
+6. [x] Add waves
+   1. [x] what does the scaffold editor look like when there's a relationship?
+7. [ ] list waves in full tracker
+8. Add athletes
    1. how to list relationships in the tracker?
-8. interactivity for full tracker
+9. interactivity for full tracker
    1. move to next step
    2. move back a step
    3. how do I make the transitions not jarring?
-9. ci deployment?
-10.
+10. ci deployment?
+11.

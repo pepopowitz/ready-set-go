@@ -1,8 +1,8 @@
 defmodule ReadySetGoWeb.TrackLive.Index do
   use ReadySetGoWeb, :live_view
-  alias ReadySetGo.PubSub
+  # alias ReadySetGo.PubSub
   alias ReadySetGo.TrackerSpace
-  alias ReadySetGo.TrackerSpace.Tracker
+  # alias ReadySetGo.TrackerSpace.Tracker
 
   @impl true
 

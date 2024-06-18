@@ -16,8 +16,6 @@ defmodule ReadySetGo.TrackerSpace do
   end
 
   def notify({:ok, tracker}, event) do
-    IO.puts("sjhsjhsjh")
-    IO.puts(event)
     PubSub.broadcast(ReadySetGo.PubSub, "ready_set_go", {event, tracker})
   end
 
