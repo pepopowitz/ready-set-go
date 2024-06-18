@@ -52,14 +52,16 @@
 
     <p class="my-8"></p>
 
-    <div class="mt-8 mb-4 flex justify-center">
-      <.link
-        href={~p"/track"}
-        class="inline-block px-6 py-3 text-2xl font-semibold leading-6 text-white bg-brand rounded-lg hover:bg-red-800 transition hover:scale-105"
-      >
-        Track the Camundathlon!
-      </.link>
-    </div>
+    <%= if @camundathlon do %>
+      <div class="mt-8 mb-4 flex justify-center">
+        <.link
+          href={~p"/track/#{@camundathlon.id}"}
+          class="inline-block px-6 py-3 text-2xl font-semibold leading-6 text-white bg-brand rounded-lg hover:bg-red-800 transition hover:scale-105"
+        >
+          Track the Camundathlon!
+        </.link>
+      </div>
+    <% end %>
     <div class="flex items-center justify-center">
       <div class="flex space-x-4">
         <.link

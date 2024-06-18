@@ -54,6 +54,12 @@ defmodule ReadySetGo.TrackerSpace do
     Repo.get!(Event, id) |> Repo.preload(:waves)
   end
 
+  # I don't know, should I be doing this here or creating its own space?
+  #  I don't really know how to use spaces.
+  def get_camundathlon?() do
+    Repo.get_by(Event, name: "Camundathlon")
+  end
+
   @doc """
   Creates a tracker.
 
