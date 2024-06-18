@@ -23,7 +23,7 @@ defmodule ReadySetGoWeb.Router do
     resources "/waves", WaveController
 
     live("/trackers", TrackerLive.Index, :index)
-    live("/track", TrackLive.Index, :index)
+    live("/track/:id", TrackLive.Show, :show)
   end
 
   # Other scopes may use custom stacks.

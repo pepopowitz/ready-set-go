@@ -1,6 +1,6 @@
 <h1>Track events</h1>
 
-<ul id='msg-list' phx-update="stream">
+<ul id="msg-list" phx-update="stream">
   <%= for event <- @trackers do %>
     <li id={"event-#{event.id}"}>
       <b><%= event.name %>:</b>
