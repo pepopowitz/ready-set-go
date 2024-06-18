@@ -6,22 +6,24 @@ defmodule ReadySetGoWeb.TrackLive.Show do
 
   @impl true
 
-  def mount(_params, _session, socket) do
+  def mount(%{"id" => id}, _session, socket) do
     if connected?(socket), do: TrackerSpace.subscribe()
-    {:ok, assign(socket, :trackers, TrackerSpace.list_trackers())}
+    {:ok, assign(socket, :event_id, id) |> assign(:event, TrackerSpace.get_tracker!(id))}
   end
 
   @impl true
   def handle_event("update_start_time", %{"id" => id}, socket) do
-    tracker = TrackerSpace.get_tracker!(id)
-    TrackerSpace.update_tracker(tracker, %{start_time: DateTime.utc_now()})
+    wave = TrackerSpace.get_wave!(id)
+    TrackerSpace.update_wave(wave, %{start_time: DateTime.utc_now()})
 
-    {:noreply, assign(socket, :trackers, TrackerSpace.list_trackers())}
+    event_id = socket.assigns.event_id
+    {:noreply, assign(socket, :event, TrackerSpace.get_tracker!(event_id))}
   end
 
   @impl true
   def handle_info({:tracker_updated, _event}, socket) do
-    {:noreply, assign(socket, :trackers, TrackerSpace.list_trackers())}
+    event_id = socket.assigns.event_id
+    {:noreply, assign(socket, :event, TrackerSpace.get_tracker!(event_id))}
   end
 
   # @impl true

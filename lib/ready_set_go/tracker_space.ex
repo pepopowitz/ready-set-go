@@ -7,6 +7,7 @@ defmodule ReadySetGo.TrackerSpace do
   alias ReadySetGo.Repo
 
   alias ReadySetGo.RaceSpace.Event
+  alias ReadySetGo.RaceSpace.Wave
 
   # pubsub stuff so other liveviews can see the updates
   alias Phoenix.PubSub
@@ -49,7 +50,9 @@ defmodule ReadySetGo.TrackerSpace do
       ** (Ecto.NoResultsError)
 
   """
-  def get_tracker!(id), do: Repo.get!(Event, id)
+  def get_tracker!(id) do
+    Repo.get!(Event, id) |> Repo.preload(:waves)
+  end
 
   @doc """
   Creates a tracker.
@@ -115,5 +118,28 @@ defmodule ReadySetGo.TrackerSpace do
   """
   def change_tracker(%Event{} = tracker, attrs \\ %{}) do
     Event.changeset(tracker, attrs)
+  end
+
+  def get_wave!(id) do
+    Repo.get!(Wave, id)
+  end
+
+  @doc """
+  Updates a wave.
+
+  ## Examples
+
+      iex> update_wave(wave, %{field: new_value})
+      {:ok, %Wave{}}
+
+      iex> update_wave(wave, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_wave(%Wave{} = wave, attrs) do
+    wave
+    |> Wave.changeset(attrs)
+    |> Repo.update()
+    |> notify(:tracker_updated)
   end
 end
