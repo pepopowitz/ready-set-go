@@ -1,4 +1,6 @@
-<h1>Track <%= @event.name %></h1>
+<.header>
+  Track <%= @event.name %>
+</.header>
 
 <ul id="msg-list" phx-update="stream">
   <%= for wave <- @event.waves do %>
