@@ -120,4 +120,70 @@ defmodule ReadySetGo.RaceSpaceTest do
       assert %Ecto.Changeset{} = RaceSpace.change_wave(wave)
     end
   end
+
+  describe "athletes" do
+    alias ReadySetGo.RaceSpace.Athlete
+
+    import ReadySetGo.RaceSpaceFixtures
+
+    @invalid_attrs %{name: nil, number: nil, wave_index: nil, start_time: nil, t1_time: nil, t2_time: nil, end_time: nil}
+
+    test "list_athletes/0 returns all athletes" do
+      athlete = athlete_fixture()
+      assert RaceSpace.list_athletes() == [athlete]
+    end
+
+    test "get_athlete!/1 returns the athlete with given id" do
+      athlete = athlete_fixture()
+      assert RaceSpace.get_athlete!(athlete.id) == athlete
+    end
+
+    test "create_athlete/1 with valid data creates a athlete" do
+      valid_attrs = %{name: "some name", number: 42, wave_index: 42, start_time: ~N[2024-06-18 02:51:00.000000], t1_time: ~N[2024-06-18 02:51:00.000000], t2_time: ~N[2024-06-18 02:51:00.000000], end_time: ~N[2024-06-18 02:51:00.000000]}
+
+      assert {:ok, %Athlete{} = athlete} = RaceSpace.create_athlete(valid_attrs)
+      assert athlete.name == "some name"
+      assert athlete.number == 42
+      assert athlete.wave_index == 42
+      assert athlete.start_time == ~N[2024-06-18 02:51:00.000000]
+      assert athlete.t1_time == ~N[2024-06-18 02:51:00.000000]
+      assert athlete.t2_time == ~N[2024-06-18 02:51:00.000000]
+      assert athlete.end_time == ~N[2024-06-18 02:51:00.000000]
+    end
+
+    test "create_athlete/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = RaceSpace.create_athlete(@invalid_attrs)
+    end
+
+    test "update_athlete/2 with valid data updates the athlete" do
+      athlete = athlete_fixture()
+      update_attrs = %{name: "some updated name", number: 43, wave_index: 43, start_time: ~N[2024-06-19 02:51:00.000000], t1_time: ~N[2024-06-19 02:51:00.000000], t2_time: ~N[2024-06-19 02:51:00.000000], end_time: ~N[2024-06-19 02:51:00.000000]}
+
+      assert {:ok, %Athlete{} = athlete} = RaceSpace.update_athlete(athlete, update_attrs)
+      assert athlete.name == "some updated name"
+      assert athlete.number == 43
+      assert athlete.wave_index == 43
+      assert athlete.start_time == ~N[2024-06-19 02:51:00.000000]
+      assert athlete.t1_time == ~N[2024-06-19 02:51:00.000000]
+      assert athlete.t2_time == ~N[2024-06-19 02:51:00.000000]
+      assert athlete.end_time == ~N[2024-06-19 02:51:00.000000]
+    end
+
+    test "update_athlete/2 with invalid data returns error changeset" do
+      athlete = athlete_fixture()
+      assert {:error, %Ecto.Changeset{}} = RaceSpace.update_athlete(athlete, @invalid_attrs)
+      assert athlete == RaceSpace.get_athlete!(athlete.id)
+    end
+
+    test "delete_athlete/1 deletes the athlete" do
+      athlete = athlete_fixture()
+      assert {:ok, %Athlete{}} = RaceSpace.delete_athlete(athlete)
+      assert_raise Ecto.NoResultsError, fn -> RaceSpace.get_athlete!(athlete.id) end
+    end
+
+    test "change_athlete/1 returns a athlete changeset" do
+      athlete = athlete_fixture()
+      assert %Ecto.Changeset{} = RaceSpace.change_athlete(athlete)
+    end
+  end
 end

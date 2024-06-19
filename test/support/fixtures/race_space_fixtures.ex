@@ -36,4 +36,24 @@ defmodule ReadySetGo.RaceSpaceFixtures do
 
     wave
   end
+
+  @doc """
+  Generate a athlete.
+  """
+  def athlete_fixture(attrs \\ %{}) do
+    {:ok, athlete} =
+      attrs
+      |> Enum.into(%{
+        end_time: ~N[2024-06-18 02:51:00.000000],
+        name: "some name",
+        number: 42,
+        start_time: ~N[2024-06-18 02:51:00.000000],
+        t1_time: ~N[2024-06-18 02:51:00.000000],
+        t2_time: ~N[2024-06-18 02:51:00.000000],
+        wave_index: 42
+      })
+      |> ReadySetGo.RaceSpace.create_athlete()
+
+    athlete
+  end
 end

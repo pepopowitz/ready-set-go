@@ -208,6 +208,17 @@ I used a mish mash of resources to get started with this app.
   - Delete
     - no changes
 
+- Adding an Athlete entity
+  - mix phx.gen.html RaceSpace Athlete athletes name:string wave_index:integer wave_id:references:waves number:integer start_time:naive_datetime_usec t1_time:naive_datetime_usec t2_time:naive_datetime_usec end_time:naive_datetime_usec
+  - mix ecto.migrate
+  - add the resource to the router:
+    - `resources "/athletes", AthleteController`
+  - add associations to models:
+    - wave: `has_many :athletes, ReadySetGo.RaceSpace.Athlete`
+    - athlete: `belongs_to :wave, ReadySetGo.RaceSpace.Wave`
+  - remove the :wave_id field from athlete.ex
+    -
+
 ## Notes
 
 - Start postgres: `docker compose up -d`
@@ -274,9 +285,9 @@ finish-time:naive_datetime_usec
 5. [x] deploy
 6. [x] Add waves
    1. [x] what does the scaffold editor look like when there's a relationship?
-7. [ ] list waves in full tracker
+7. [x] list waves in full tracker
+   1. [x] how to list relationships in the tracker?
 8. Add athletes
-   1. how to list relationships in the tracker?
 9. interactivity for full tracker
    1. move to next step
    2. move back a step

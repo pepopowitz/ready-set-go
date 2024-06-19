@@ -21,6 +21,7 @@ defmodule ReadySetGoWeb.Router do
 
     resources "/events", EventController
     resources "/waves", WaveController
+    resources "/athletes", AthleteController
 
     live("/trackers", TrackerLive.Index, :index)
     live("/track/:id", TrackLive.Show, :show)

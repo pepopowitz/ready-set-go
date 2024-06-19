@@ -1,0 +1,8 @@
+<.header>
+  Edit Athlete <%= @athlete.id %>
+  <:subtitle>Use this form to manage athlete records in your database.</:subtitle>
+</.header>
+
+<.athlete_form changeset={@changeset} action={~p"/athletes/#{@athlete}"} />
+
+<.back navigate={~p"/athletes"}>Back to athletes</.back>
