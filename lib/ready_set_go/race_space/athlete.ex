@@ -18,7 +18,16 @@ defmodule ReadySetGo.RaceSpace.Athlete do
   @doc false
   def changeset(athlete, attrs) do
     athlete
-    |> cast(attrs, [:name, :wave_index, :number, :start_time, :t1_time, :t2_time, :end_time])
-    |> validate_required([:name, :wave_id, :wave_index, :number])
+    |> cast(attrs, [
+      :name,
+      :number,
+      :wave_id,
+      :wave_index,
+      :start_time,
+      :t1_time,
+      :t2_time,
+      :end_time
+    ])
+    |> validate_required([:name, :number, :wave_id, :wave_index])
   end
 end

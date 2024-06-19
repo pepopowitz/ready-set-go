@@ -5,13 +5,16 @@ defmodule ReadySetGoWeb.AthleteController do
   alias ReadySetGo.RaceSpace.Athlete
 
   def index(conn, _params) do
-    athletes = RaceSpace.list_athletes()
+    athletes = RaceSpace.list_athletes([:wave])
     render(conn, :index, athletes: athletes)
   end
 
   def new(conn, _params) do
     changeset = RaceSpace.change_athlete(%Athlete{})
-    render(conn, :new, changeset: changeset)
+
+    waves = get_waves()
+
+    render(conn, :new, changeset: changeset, waves: waves)
   end
 
   def create(conn, %{"athlete" => athlete_params}) do
@@ -27,14 +30,17 @@ defmodule ReadySetGoWeb.AthleteController do
   end
 
   def show(conn, %{"id" => id}) do
-    athlete = RaceSpace.get_athlete!(id)
+    athlete = RaceSpace.get_athlete!(id, [:wave])
     render(conn, :show, athlete: athlete)
   end
 
   def edit(conn, %{"id" => id}) do
     athlete = RaceSpace.get_athlete!(id)
     changeset = RaceSpace.change_athlete(athlete)
-    render(conn, :edit, athlete: athlete, changeset: changeset)
+
+    waves = get_waves()
+
+    render(conn, :edit, athlete: athlete, changeset: changeset, waves: waves)
   end
 
   def update(conn, %{"id" => id, "athlete" => athlete_params}) do
@@ -58,5 +64,10 @@ defmodule ReadySetGoWeb.AthleteController do
     conn
     |> put_flash(:info, "Athlete deleted successfully.")
     |> redirect(to: ~p"/athletes")
+  end
+
+  defp get_waves do
+    RaceSpace.list_waves()
+    |> Enum.map(&{&1.name, &1.id})
   end
 end

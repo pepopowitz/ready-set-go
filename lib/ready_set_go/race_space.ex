@@ -113,8 +113,8 @@ defmodule ReadySetGo.RaceSpace do
       [%Wave{}, ...]
 
   """
-  def list_waves do
-    Repo.all(Wave) |> Repo.preload(:event)
+  def list_waves(preload \\ []) do
+    Repo.all(Wave) |> Repo.preload(preload)
   end
 
   @doc """
@@ -209,8 +209,9 @@ defmodule ReadySetGo.RaceSpace do
       [%Athlete{}, ...]
 
   """
-  def list_athletes do
+  def list_athletes(preload \\ []) do
     Repo.all(Athlete)
+    |> Repo.preload(preload)
   end
 
   @doc """
@@ -227,7 +228,10 @@ defmodule ReadySetGo.RaceSpace do
       ** (Ecto.NoResultsError)
 
   """
-  def get_athlete!(id), do: Repo.get!(Athlete, id)
+  def get_athlete!(id, preload \\ []) do
+    Repo.get!(Athlete, id)
+    |> Repo.preload(preload)
+  end
 
   @doc """
   Creates a athlete.

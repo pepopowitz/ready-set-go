@@ -209,6 +209,7 @@ I used a mish mash of resources to get started with this app.
     - no changes
 
 - Adding an Athlete entity
+
   - mix phx.gen.html RaceSpace Athlete athletes name:string wave_index:integer wave_id:references:waves number:integer start_time:naive_datetime_usec t1_time:naive_datetime_usec t2_time:naive_datetime_usec end_time:naive_datetime_usec
   - mix ecto.migrate
   - add the resource to the router:
@@ -217,7 +218,53 @@ I used a mish mash of resources to get started with this app.
     - wave: `has_many :athletes, ReadySetGo.RaceSpace.Athlete`
     - athlete: `belongs_to :wave, ReadySetGo.RaceSpace.Wave`
   - remove the :wave_id field from athlete.ex
-    -
+    - add it to the `cast` and `validate_required` calls in `changeset`
+  - remove optional fields from validate_required
+  - add field to scaffolded forms
+
+    - Index
+      - preload the :wave from the athlete lookup, so I can drill over to it.
+        - I did this with the `preloads` argument to the space function `load_athletes`:
+          ```
+          def list_athletes(preload \\ []) do
+            Repo.all(Athlete)
+            |> Repo.preload(preload)
+          end
+          ```
+        - usage from controller:
+          - `athletes = RaceSpace.list_athletes([:wave])`
+      - drill over to the event name in the table: `<:col :let={athlete} label="Wave"><%= athlete.wave.name %></:col>`
+    - New
+
+      - in AthleteController#new, look up the waves that can be associated to, map them to name/id tuples, and then pass them in the `assigns` map:
+
+        ```
+        waves = RaceSpace.list_waves()
+          |> Enum.map(&{&1.name, &1.id})
+
+        render(conn, :new, changeset: changeset, waves: waves)
+        ```
+
+      - pass the waves through the `new` template into `athlete_form`: `<.athlete_form ... waves={@waves} />`
+      - add a select field to `athlete_form` for the waves:
+        ```
+        <.input field={f[:wave_id]} type="select" label="Wave"
+          options={@waves} />
+        ```
+
+      ```
+
+      ```
+
+    - Show
+      - same thing as Index
+        - add preload param to RaceSpace#get_athlete!
+        - preload [:wave] from AthleteController#show
+        - render the wave name in the view: `<:item title="Wave"><%= @athlete.wave.name %></:item>`
+    - Edit
+      - because New added `@waves` to the shared `athlete_form`, I need to add that to the assigns in the controller again
+      - I already extracted a function named `get_waves()` so call that
+      - and pass the waves through `edit.html.heex`.
 
 ## Notes
 

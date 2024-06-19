@@ -3,6 +3,6 @@
   <:subtitle>Use this form to manage athlete records in your database.</:subtitle>
 </.header>
 
-<.athlete_form changeset={@changeset} action={~p"/athletes/#{@athlete}"} />
+<.athlete_form changeset={@changeset} action={~p"/athletes/#{@athlete}"} waves={@waves} />
 
 <.back navigate={~p"/athletes"}>Back to athletes</.back>

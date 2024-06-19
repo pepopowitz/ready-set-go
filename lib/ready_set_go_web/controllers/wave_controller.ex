@@ -6,7 +6,7 @@ defmodule ReadySetGoWeb.WaveController do
   alias ReadySetGo.Repo
 
   def index(conn, _params) do
-    waves = RaceSpace.list_waves()
+    waves = RaceSpace.list_waves([:event])
     render(conn, :index, waves: waves)
   end
 

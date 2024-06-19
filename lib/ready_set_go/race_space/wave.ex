@@ -8,6 +8,7 @@ defmodule ReadySetGo.RaceSpace.Wave do
     field :start_time, :naive_datetime_usec
     field :end_time, :naive_datetime_usec
     belongs_to :event, ReadySetGo.RaceSpace.Event
+    has_many :athletes, ReadySetGo.RaceSpace.Athlete
 
     timestamps(type: :utc_datetime)
   end

@@ -3,8 +3,9 @@
     Oops, something went wrong! Please check the errors below.
   </.error>
   <.input field={f[:name]} type="text" label="Name" />
-  <.input field={f[:wave_index]} type="number" label="Wave index" />
   <.input field={f[:number]} type="number" label="Number" />
+  <.input field={f[:wave_id]} type="select" label="Wave" options={@waves} />
+  <.input field={f[:wave_index]} type="number" label="Wave index" />
   <.input field={f[:start_time]} type="text" label="Start time" />
   <.input field={f[:t1_time]} type="text" label="T1 time" />
   <.input field={f[:t2_time]} type="text" label="T2 time" />
