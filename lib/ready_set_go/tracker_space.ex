@@ -51,7 +51,16 @@ defmodule ReadySetGo.TrackerSpace do
 
   """
   def get_tracker!(id) do
-    Repo.get!(Event, id) |> Repo.preload(:waves)
+    query =
+      from(e in Event,
+        where: e.id == ^id,
+        join: w in assoc(e, :waves),
+        join: a in assoc(w, :athletes),
+        order_by: [asc: w.index, asc: a.wave_index],
+        preload: [waves: {w, athletes: a}]
+      )
+
+    Repo.one!(query)
   end
 
   # I don't know, should I be doing this here or creating its own space?

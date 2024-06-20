@@ -266,6 +266,26 @@ I used a mish mash of resources to get started with this app.
       - I already extracted a function named `get_waves()` so call that
       - and pass the waves through `edit.html.heex`.
 
+- Add athletes to tracker
+
+  - Update the tracker_space query to join the other tables proactively:
+
+    ```
+      query =
+      from(e in Event,
+        where: e.id == ^id,
+        join: w in assoc(e, :waves),
+        join: a in assoc(w, :athletes),
+        order_by: [asc: w.index, asc: a.wave_index],
+        preload: [waves: {w, athletes: a}]
+      )
+
+      Repo.one!(query)
+    ```
+
+  - Update the view to emit nested arrays (lots of tailwind changes here)
+  -
+
 ## Notes
 
 - Start postgres: `docker compose up -d`
@@ -334,10 +354,11 @@ finish-time:naive_datetime_usec
    1. [x] what does the scaffold editor look like when there's a relationship?
 7. [x] list waves in full tracker
    1. [x] how to list relationships in the tracker?
-8. Add athletes
+8. [x] Add athletes
 9. interactivity for full tracker
-   1. move to next step
-   2. move back a step
-   3. how do I make the transitions not jarring?
+   1. display athletes by wave
+   2. move to next step
+   3. move back a step
+   4. how do I make the transitions not jarring?
 10. ci deployment?
 11.

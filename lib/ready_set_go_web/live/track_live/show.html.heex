@@ -2,12 +2,47 @@
   Track <%= @event.name %>
 </.header>
 
-<ul id="msg-list" phx-update="stream">
+<ol id="msg-list" phx-update="stream" class="grid grid-cols-4 gap-4">
   <%= for wave <- @event.waves do %>
-    <li id={"wave-#{wave.id}"}>
-      <b><%= wave.name %>:</b>
-      <%= wave.start_time %>
-      <button phx-click="update_start_time" phx-value-id={wave.id}>Update</button>
+    <li id={"wave-#{wave.id}"} class="col-span-4 p-4 rounded-md border-t">
+      <div>
+        <strong class="font-bold text-lg"><%= wave.name %></strong>
+        <%= wave.start_time %>
+        <button
+          phx-click="update_start_time"
+          phx-value-id={wave.id}
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Update
+        </button>
+      </div>
+      <ol class="mt-2">
+        <%= for athlete <- wave.athletes do %>
+          <li id={"athlete-#{athlete.id}"} class="col-span-1 p-4 rounded-md border shadow">
+            <div class="flex justify-between items-center">
+              <div>
+                <strong class="font-bold"><%= athlete.number %></strong> <%= athlete.name %>
+              </div>
+              <div>
+                <button
+                  phx-click="advance_athlete"
+                  phx-value-id={athlete.id}
+                  class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  Advance
+                </button>
+                <button
+                  phx-click="rollback_athlete"
+                  phx-value-id={athlete.id}
+                  class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  Oops!
+                </button>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      </ol>
     </li>
   <% end %>
-</ul>
+</ol>
