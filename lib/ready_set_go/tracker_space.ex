@@ -172,9 +172,9 @@ defmodule ReadySetGo.TrackerSpace do
   def maybe_rollback_wave?(wave_id) do
     query = from(a in Athlete, where: a.wave_id == ^wave_id, where: not is_nil(a.start_time))
 
-    any_started_athlete = Repo.one(query)
+    started_athletes = Repo.all(query)
 
-    if any_started_athlete == nil do
+    if Enum.empty?(started_athletes) do
       wave = get_wave!(wave_id)
 
       wave
