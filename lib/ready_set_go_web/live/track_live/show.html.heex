@@ -1,20 +1,22 @@
 <.header>
-  Track <%= @event.name %>
+  <div class="flex justify-between items-center">
+    <span>Track <%= @event.name %></span>
+  </div>
 </.header>
 
 <ol id="msg-list" phx-update="stream" class="grid grid-cols-4 gap-4">
   <%= for wave <- @event.waves do %>
-    <li id={"wave-#{wave.id}"} class="col-span-4 p-4 rounded-md border-t">
+    <li id={"wave-#{wave.id}"} class="col-span-4 p-4 border-t">
       <div>
         <strong class="font-bold text-lg"><%= wave.name %></strong>
-        <%= wave.start_time %>
-        <button
-          phx-click="update_start_time"
-          phx-value-id={wave.id}
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Update
-        </button>
+        <%= if wave.start_time do %>
+          <span class="text-green-700">Started!</span>
+          <%= wave.start_time
+          |> NaiveDateTime.truncate(:second)
+          |> Time.to_string() %>
+        <% else %>
+          <span class="text-yellow-600">Waiting...</span>
+        <% end %>
       </div>
       <ol class="mt-2">
         <%= for athlete <- wave.athletes do %>

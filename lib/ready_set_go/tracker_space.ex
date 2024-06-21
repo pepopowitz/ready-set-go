@@ -8,6 +8,7 @@ defmodule ReadySetGo.TrackerSpace do
 
   alias ReadySetGo.RaceSpace.Event
   alias ReadySetGo.RaceSpace.Wave
+  alias ReadySetGo.RaceSpace.Athlete
 
   # pubsub stuff so other liveviews can see the updates
   alias Phoenix.PubSub
@@ -156,5 +157,79 @@ defmodule ReadySetGo.TrackerSpace do
     |> Wave.changeset(attrs)
     |> Repo.update()
     |> notify(:tracker_updated)
+  end
+
+  def maybe_start_wave?(wave_id, now) do
+    wave = get_wave!(wave_id)
+
+    if wave.start_time == nil do
+      wave
+      |> Wave.changeset(%{start_time: now})
+      |> Repo.update()
+    end
+  end
+
+  def maybe_rollback_wave?(wave_id) do
+    query = from(a in Athlete, where: a.wave_id == ^wave_id, where: not is_nil(a.start_time))
+
+    any_started_athlete = Repo.one(query)
+
+    if any_started_athlete == nil do
+      wave = get_wave!(wave_id)
+
+      wave
+      |> Wave.changeset(%{start_time: nil})
+      |> Repo.update()
+    end
+  end
+
+  def get_athlete!(id) do
+    Repo.get!(Athlete, id)
+  end
+
+  def advance_athlete(%Athlete{} = athlete) do
+    now = DateTime.utc_now()
+
+    changes =
+      cond do
+        athlete.start_time == nil -> %{start_time: now}
+        athlete.t1_time == nil -> %{t1_time: now}
+        athlete.t2_time == nil -> %{t2_time: now}
+        athlete.end_time == nil -> %{end_time: now}
+        true -> nil
+      end
+
+    if changes != nil do
+      updated_athlete =
+        athlete
+        |> Athlete.changeset(changes)
+        |> Repo.update()
+
+      maybe_start_wave?(athlete.wave_id, now)
+
+      notify(updated_athlete, :tracker_updated)
+    end
+  end
+
+  def rollback_athlete(%Athlete{} = athlete) do
+    changes =
+      cond do
+        athlete.end_time != nil -> %{end_time: nil}
+        athlete.t2_time != nil -> %{t2_time: nil}
+        athlete.t1_time != nil -> %{t1_time: nil}
+        athlete.start_time != nil -> %{start_time: nil}
+        true -> nil
+      end
+
+    if changes != nil do
+      updated_athlete =
+        athlete
+        |> Athlete.changeset(changes)
+        |> Repo.update()
+
+      maybe_rollback_wave?(athlete.wave_id)
+
+      notify(updated_athlete, :tracker_updated)
+    end
   end
 end

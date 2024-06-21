@@ -21,6 +21,24 @@ defmodule ReadySetGoWeb.TrackLive.Show do
   end
 
   @impl true
+  def handle_event("advance_athlete", %{"id" => id}, socket) do
+    athlete = TrackerSpace.get_athlete!(id)
+    TrackerSpace.advance_athlete(athlete)
+
+    event_id = socket.assigns.event_id
+    {:noreply, assign(socket, :event, TrackerSpace.get_tracker!(event_id))}
+  end
+
+  @impl true
+  def handle_event("rollback_athlete", %{"id" => id}, socket) do
+    athlete = TrackerSpace.get_athlete!(id)
+    TrackerSpace.rollback_athlete(athlete)
+
+    event_id = socket.assigns.event_id
+    {:noreply, assign(socket, :event, TrackerSpace.get_tracker!(event_id))}
+  end
+
+  @impl true
   def handle_info({:tracker_updated, _event}, socket) do
     event_id = socket.assigns.event_id
     {:noreply, assign(socket, :event, TrackerSpace.get_tracker!(event_id))}
