@@ -355,10 +355,17 @@ finish-time:naive_datetime_usec
 7. [x] list waves in full tracker
    1. [x] how to list relationships in the tracker?
 8. [x] Add athletes
-9. interactivity for full tracker
-   1. display athletes by wave
-   2. move to next step
-   3. move back a step
-   4. how do I make the transitions not jarring?
-10. ci deployment?
-11.
+9. [x] interactivity for full tracker
+   1. [x] display athletes by wave
+   2. [x] move to next step
+   3. [x] move back a step
+10. [ ] Sort tracker by fastest & furthest along
+    1. [ ] show waves as a field instead of grouping?
+11. [ ] Make it obvious when someone gets updated
+12. how do I make the transitions not jarring?
+13. Make it look nicer
+14. [ ] Add auth
+    1. [ ] Add admin user
+    2. [ ] Hide buttons for non-admin user
+15. ci deployment?
+16.
