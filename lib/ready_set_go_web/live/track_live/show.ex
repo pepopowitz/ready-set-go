@@ -26,7 +26,10 @@ defmodule ReadySetGoWeb.TrackLive.Show do
     TrackerSpace.advance_athlete(athlete)
 
     event_id = socket.assigns.event_id
-    {:noreply, assign(socket, :event, TrackerSpace.get_tracker!(event_id))}
+
+    {:noreply,
+     assign(socket, :event, TrackerSpace.get_tracker!(event_id))
+     |> assign(:updated_athlete_id, athlete.id)}
   end
 
   @impl true

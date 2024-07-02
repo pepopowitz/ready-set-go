@@ -3,3 +3,11 @@
 @import "tailwindcss/utilities";
 
 /* This file is for your main application CSS */
+
+/* Removes a background color with a fade out effect */
+@keyframes fadeOut {
+  100% { background-color: transparent; } /* end color */
+}
+.fade-bg {
+  animation: fadeOut 2s forwards;
+}

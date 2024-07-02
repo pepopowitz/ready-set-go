@@ -359,13 +359,15 @@ finish-time:naive_datetime_usec
    1. [x] display athletes by wave
    2. [x] move to next step
    3. [x] move back a step
-10. [ ] Sort tracker by fastest & furthest along
-    1. [ ] show waves as a field instead of grouping?
-11. [ ] Make it obvious when someone gets updated
-12. how do I make the transitions not jarring?
-13. Make it look nicer
-14. [ ] Add auth
+10. [x] Sort tracker by fastest & furthest along
+    1. [x] show waves as a field instead of grouping?
+11. [x] Make it obvious when someone gets updated
+12. [ ] Show durations instead of timestamps
+    1. [ ] Sort by durations instead of timestamps
+13. [ ] Show live timers
+14. Make it look nicer
+15. [ ] Add auth
     1. [ ] Add admin user
     2. [ ] Hide buttons for non-admin user
-15. ci deployment?
-16.
+16. ci deployment?
+17.
