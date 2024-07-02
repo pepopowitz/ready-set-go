@@ -59,13 +59,13 @@ defmodule ReadySetGo.TrackerSpace do
         join: a in assoc(w, :athletes),
         order_by: [
           asc: is_nil(a.end_time),
-          desc: a.end_time,
+          asc: a.end_time,
           asc: is_nil(a.t2_time),
-          desc: a.t2_time,
+          asc: a.t2_time,
           asc: is_nil(a.t1_time),
-          desc: a.t1_time,
+          asc: a.t1_time,
           asc: is_nil(a.start_time),
-          desc: a.start_time,
+          asc: a.start_time,
           asc: w.index,
           asc: a.wave_index
         ],
