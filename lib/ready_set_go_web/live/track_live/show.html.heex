@@ -8,7 +8,7 @@
   <%= for wave <- @event.waves, athlete <- wave.athletes do %>
     <li
       id={"athlete-#{athlete.id}"}
-      class={"col-span-4 p-4 border-t" <> (if athlete.id == assigns[:updated_athlete_id], do: " bg-green-200 fade-bg", else: "")}
+      class={"col-span-4 p-4 border-t" <> (if athlete.id == assigns[:updated_athlete_id], do: " bg-orange-200 fade-bg", else: "")}
     >
       <ol class="mt-2">
         <li class="col-span-1 p-4 rounded-md border shadow">
