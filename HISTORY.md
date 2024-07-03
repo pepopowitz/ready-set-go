@@ -362,12 +362,20 @@ finish-time:naive_datetime_usec
 10. [x] Sort tracker by fastest & furthest along
     1. [x] show waves as a field instead of grouping?
 11. [x] Make it obvious when someone gets updated
+    1. [ ] Emit the update effect to all clients!
 12. [ ] Show durations instead of timestamps
     1. [ ] Sort by durations instead of timestamps
 13. [ ] Show live timers
 14. Make it look nicer
-15. [ ] Add auth
+15. [ ] Make it harder to roll back an athlete
+16. [ ] Add auth
     1. [ ] Add admin user
     2. [ ] Hide buttons for non-admin user
-16. ci deployment?
-17.
+17. [ ] Favicon
+    1. [ ] logo
+18. [ ] results view
+    1. [ ] name, total time, place
+    2. [ ] swim time, bike time, run time
+    3. [ ] sort by column?
+    4. [ ] export data?
+19. ci deployment?
