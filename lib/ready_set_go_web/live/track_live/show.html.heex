@@ -13,10 +13,10 @@
       <ol class="mt-2">
         <li class="col-span-1 p-4 rounded-md border shadow">
           <div class="flex justify-between items-center mb-4">
-            <div>
+            <div class="athlete-id">
               <strong class="font-bold"><%= athlete.number %></strong> <%= athlete.name %>
             </div>
-            <div>
+            <div class="actions">
               <button
                 phx-click="advance_athlete"
                 phx-value-id={athlete.id}
