@@ -34,7 +34,7 @@ defmodule ReadySetGoWeb.AthleteStatus do
     assigns = assign(assigns, :swim_duration, swim_duration)
 
     ~H"""
-    <span class="text-2xl inline-block align-middle text-gray-400">
+    <span class="text-2xl inline-block align-middle text-gray-300">
       <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256">
         <path
           fill="currentColor"
@@ -78,7 +78,7 @@ defmodule ReadySetGoWeb.AthleteStatus do
     assigns = assign(assigns, :bike_duration, bike_duration)
 
     ~H"""
-    <span class="ml-4 text-2xl inline-block align-middle text-gray-400">
+    <span class="ml-4 text-2xl inline-block align-middle text-gray-300">
       <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256">
         <path
           fill="currentColor"
@@ -122,7 +122,7 @@ defmodule ReadySetGoWeb.AthleteStatus do
     assigns = assign(assigns, :run_duration, run_duration)
 
     ~H"""
-    <span class="ml-4 text-2xl inline-block align-middle text-gray-400">
+    <span class="ml-4 text-2xl inline-block align-middle text-gray-300">
       <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256">
         <path
           fill="currentColor"
@@ -166,7 +166,7 @@ defmodule ReadySetGoWeb.AthleteStatus do
 
     ~H"""
     <div>
-      <span class="text-2xl inline-block align-middle text-gray-200">
+      <span class="text-2xl inline-block align-middle text-gray-300">
         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256">
           <path
             fill="currentColor"
