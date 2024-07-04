@@ -6,36 +6,37 @@
 
 <ol id="msg-list" phx-update="replace" class="grid grid-cols-4 gap-4 mt-2">
   <%= for wave <- @event.waves, athlete <- wave.athletes do %>
-    <li
-      id={"athlete-#{athlete.id}"}
-      class={"col-span-4" <> (if athlete.id == assigns[:updated_athlete_id], do: " bg-orange-200 fade-bg", else: "")}
-    >
+    <li id={"athlete-#{athlete.id}"} class={"col-span-4" <> (if athlete.id == assigns[:updated_athlete_id], do: "
+      bg-orange-200 fade-bg", else: "")}
+      >
       <ol class="mt-2">
         <li class="col-span-1 p-4 rounded-md border shadow">
-          <div class="flex justify-between items-center mb-4">
-            <div class="athlete-id">
-              <strong class="font-bold"><%= athlete.number %></strong> <%= athlete.name %>
+          <div class="flex justify-between items-start">
+            <div class="flex flex-col">
+              <div class="athlete-id flex items-start">
+                <span class="font-bold text-3xl leading-6"><strong>
+                    <%= athlete.number %>
+                  </strong></span>
+                <span class="ml-2">
+                  <%= athlete.name %>
+                </span>
+              </div>
+              <div class="actions mt-4">
+                <button phx-click="advance_athlete" phx-value-id={athlete.id}
+                  class="bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded">
+                  Advance
+                </button>
+                <button phx-click="rollback_athlete" phx-value-id={athlete.id}
+                  class="ml-8 bg-gray-200 hover:bg-gray-400 text-red-700 font-bold py-2 px-4 rounded">
+                  Oops!
+                </button>
+
+              </div>
             </div>
-            <div class="actions">
-              <button
-                phx-click="rollback_athlete"
-                phx-value-id={athlete.id}
-                class="border-2 border-red-500 hover:bg-red-200 text-red-500 font-bold py-1 rounded"
-              >
-                Oops!
-              </button>
-              <button
-                phx-click="advance_athlete"
-                phx-value-id={athlete.id}
-                class="ml-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-              >
-                Advance
-              </button>
-            </div>
+            <ReadySetGoWeb.AthleteStatus.status athlete={athlete} wave={wave} />
           </div>
-          <ReadySetGoWeb.AthleteStatus.status athlete={athlete} wave={wave} />
         </li>
       </ol>
     </li>
-  <% end %>
+    <% end %>
 </ol>
