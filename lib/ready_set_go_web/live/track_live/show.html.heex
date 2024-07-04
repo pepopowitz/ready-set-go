@@ -11,8 +11,8 @@
       >
       <ol class="mt-2">
         <li class="col-span-1 p-4 rounded-md border shadow">
-          <div class="flex justify-between items-start">
-            <div class="flex flex-col">
+          <div class="flex flex-col">
+            <div class="flex justify-between items-start">
               <div class="athlete-id flex items-start">
                 <span class="font-bold text-3xl leading-6"><strong>
                     <%= athlete.number %>
@@ -21,19 +21,22 @@
                   <%= athlete.name %>
                 </span>
               </div>
-              <div class="actions mt-4">
-                <button phx-click="advance_athlete" phx-value-id={athlete.id}
-                  class="bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded">
-                  Advance
-                </button>
-                <button phx-click="rollback_athlete" phx-value-id={athlete.id}
-                  class="ml-8 bg-gray-200 hover:bg-gray-400 text-red-700 font-bold py-2 px-4 rounded">
-                  Oops!
-                </button>
 
-              </div>
+              <ReadySetGoWeb.AthleteStatus.total_duration athlete={athlete} />
             </div>
             <ReadySetGoWeb.AthleteStatus.status athlete={athlete} wave={wave} />
+            <div class="actions mt-4 flex justify-between">
+              <button phx-click="rollback_athlete" phx-value-id={athlete.id}
+                class="bg-gray-200 hover:bg-gray-400 text-red-700 font-bold py-2 px-4 rounded">
+                Oops!
+              </button>
+              <button phx-click="advance_athlete" phx-value-id={athlete.id}
+                class="bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded">
+                Advance
+              </button>
+
+
+            </div>
           </div>
         </li>
       </ol>

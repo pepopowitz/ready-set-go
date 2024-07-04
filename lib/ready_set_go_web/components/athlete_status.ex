@@ -8,16 +8,15 @@ defmodule ReadySetGoWeb.AthleteStatus do
 
   def status(assigns) when not is_nil(assigns.athlete.start_time) do
     ~H"""
-    <div>
-      <.total_duration athlete={@athlete} />
-      <div class="flex flex-col sm:flex-row sm:mt-2">
+    <div class="self-end">
+      <div class="flex flex-row mt-2">
         <div>
           <.swim_duration athlete={@athlete} />
         </div>
-        <div class="sm:ml-4">
+        <div class="ml-4">
           <.bike_duration athlete={@athlete} />
         </div>
-        <div class="sm:ml-4">
+        <div class="ml-4">
           <.run_duration athlete={@athlete} />
         </div>
       </div>
