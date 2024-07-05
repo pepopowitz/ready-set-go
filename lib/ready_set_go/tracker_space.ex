@@ -115,7 +115,6 @@ defmodule ReadySetGo.TrackerSpace do
     tracker
     |> Event.changeset(attrs)
     |> Repo.update()
-    |> notify(:tracker_updated)
   end
 
   @doc """
@@ -164,10 +163,11 @@ defmodule ReadySetGo.TrackerSpace do
 
   """
   def update_wave(%Wave{} = wave, attrs) do
+    IO.puts("Updating wave")
+
     wave
     |> Wave.changeset(attrs)
     |> Repo.update()
-    |> notify(:tracker_updated)
   end
 
   def maybe_start_wave?(wave_id, now) do
