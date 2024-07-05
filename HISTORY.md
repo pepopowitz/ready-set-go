@@ -374,3 +374,4 @@ finish-time:naive_datetime_usec
     3. [ ] sort by column?
     4. [ ] export data?
 20. ci deployment?
+21. known bug: :reset_confirm is never cancelled, and can cancel the next rollback request even after the original rollback is confirmed
