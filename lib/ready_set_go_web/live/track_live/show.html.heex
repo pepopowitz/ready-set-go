@@ -28,7 +28,7 @@
             <div class="actions mt-4 flex justify-between">
               <button phx-click="rollback_athlete" phx-value-id={athlete.id}
                 class="bg-gray-200 hover:bg-gray-400 text-red-700 font-bold py-2 px-4 rounded">
-                Oops!
+                <%= if @confirm_rollback==athlete.id, do: "Are you sure?" , else: "Oops!" %>
               </button>
               <button phx-click="advance_athlete" phx-value-id={athlete.id}
                 class="bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded">

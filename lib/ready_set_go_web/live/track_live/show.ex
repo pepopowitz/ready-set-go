@@ -8,7 +8,11 @@ defmodule ReadySetGoWeb.TrackLive.Show do
 
   def mount(%{"id" => id}, _session, socket) do
     if connected?(socket), do: TrackerSpace.subscribe()
-    {:ok, assign(socket, :event_id, id) |> assign(:event, TrackerSpace.get_tracker!(id))}
+
+    {:ok,
+     assign(socket, :event_id, id)
+     |> assign(:event, TrackerSpace.get_tracker!(id))
+     |> assign(:confirm_rollback, nil)}
   end
 
   @impl true
@@ -34,14 +38,27 @@ defmodule ReadySetGoWeb.TrackLive.Show do
 
   @impl true
   def handle_event("rollback_athlete", %{"id" => id}, socket) do
-    athlete = TrackerSpace.get_athlete!(id)
-    TrackerSpace.rollback_athlete(athlete)
+    id = String.to_integer(id)
 
-    event_id = socket.assigns.event_id
+    case socket.assigns.confirm_rollback do
+      ^id ->
+        athlete = TrackerSpace.get_athlete!(id)
+        TrackerSpace.rollback_athlete(athlete)
 
-    {:noreply,
-     assign(socket, :event, TrackerSpace.get_tracker!(event_id))
-     |> assign(:updated_athlete_id, athlete.id)}
+        event_id = socket.assigns.event_id
+
+        {:noreply,
+         assign(socket, :event, TrackerSpace.get_tracker!(event_id))
+         |> assign(:updated_athlete_id, athlete.id)
+         |> assign(:confirm_rollback, nil)}
+
+      nil ->
+        Process.send_after(self(), {:reset_confirm, id}, 5000)
+        {:noreply, assign(socket, :confirm_rollback, id)}
+
+      _ ->
+        {:noreply, socket}
+    end
   end
 
   @impl true
@@ -51,6 +68,15 @@ defmodule ReadySetGoWeb.TrackLive.Show do
     {:noreply,
      assign(socket, :event, TrackerSpace.get_tracker!(event_id))
      |> assign(:updated_athlete_id, athlete.id)}
+  end
+
+  @impl true
+  def handle_info({:reset_confirm, id}, socket) do
+    if socket.assigns.confirm_rollback == id do
+      {:noreply, assign(socket, :confirm_rollback, nil)}
+    else
+      {:noreply, socket}
+    end
   end
 
   # @impl true

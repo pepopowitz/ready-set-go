@@ -339,12 +339,6 @@ finish-time:naive_datetime_usec
 
 ## TODO
 
-- liveview components
-- building forms the phoenix way?
-  - and scaffolding crud?
-- connecting react components to liveview
-- deployment
-
 1. [x] scaffold a crud operation to get the concept of a "race"
 2. [x] view a race via liveview (phoenix way)
 3. ~view a race via liveview (react way)~ I don't think I need this!
@@ -366,16 +360,17 @@ finish-time:naive_datetime_usec
     1. [x] Emit the update effect to all clients!
 13. [x] Show durations instead of timestamps
     1. [x] Sort by durations instead of timestamps
-14. [ ] Make it harder to roll back an athlete
+14. [x] Make it harder to roll back an athlete
 15. [ ] Add auth
     1. [ ] Add admin user
     2. [ ] Hide buttons for non-admin user
-16. [ ] Show live timers
-17. [ ] Favicon
+16. [ ] Sort properly by removing waves as an intermediary
+17. [ ] Show live timers
+18. [ ] Favicon
     1. [ ] logo
-18. [ ] results view
+19. [ ] results view
     1. [ ] name, total time, place
     2. [ ] swim time, bike time, run time
     3. [ ] sort by column?
     4. [ ] export data?
-19. ci deployment?
+20. ci deployment?
