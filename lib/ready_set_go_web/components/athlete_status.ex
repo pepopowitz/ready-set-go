@@ -4,7 +4,6 @@ defmodule ReadySetGoWeb.AthleteStatus do
   # icons taken from https://icon-sets.iconify.design/ph/
 
   attr :athlete, :map, required: true, doc: "the athlete"
-  attr :wave, :map, required: false, doc: "the wave"
 
   def status(assigns) when not is_nil(assigns.athlete.start_time) do
     ~H"""
@@ -27,7 +26,7 @@ defmodule ReadySetGoWeb.AthleteStatus do
   def status(assigns) when is_nil(assigns.athlete.start_time) do
     ~H"""
     <div class="mt-2">
-      <strong class="font-bold text-zinc-500"><em><%= @wave.name %></em></strong>
+      <strong class="font-bold text-zinc-500"><em>Wave <%= @athlete.wave %></em></strong>
     </div>
     """
   end

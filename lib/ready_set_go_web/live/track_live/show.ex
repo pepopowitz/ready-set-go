@@ -16,15 +16,6 @@ defmodule ReadySetGoWeb.TrackLive.Show do
   end
 
   @impl true
-  def handle_event("update_start_time", %{"id" => id}, socket) do
-    wave = TrackerSpace.get_wave!(id)
-    TrackerSpace.update_wave(wave, %{start_time: DateTime.utc_now()})
-
-    event_id = socket.assigns.event_id
-    {:noreply, assign(socket, :event, TrackerSpace.get_tracker!(event_id))}
-  end
-
-  @impl true
   def handle_event("advance_athlete", %{"id" => id}, socket) do
     athlete = TrackerSpace.get_athlete!(id)
     TrackerSpace.advance_athlete(athlete)

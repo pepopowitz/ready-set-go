@@ -20,7 +20,6 @@ defmodule ReadySetGoWeb.Router do
     get("/", PageController, :home)
 
     resources "/events", EventController
-    resources "/waves", WaveController
     resources "/athletes", AthleteController
 
     live("/trackers", TrackerLive.Index, :index)

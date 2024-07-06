@@ -1,8 +1,0 @@
-<.header>
-  Edit Wave <%= @wave.id %>
-  <:subtitle>Use this form to manage wave records in your database.</:subtitle>
-</.header>
-
-<.wave_form changeset={@changeset} action={~p"/waves/#{@wave}"} events={@events} />
-
-<.back navigate={~p"/waves"}>Back to waves</.back>

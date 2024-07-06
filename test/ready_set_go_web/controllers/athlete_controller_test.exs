@@ -3,9 +3,36 @@ defmodule ReadySetGoWeb.AthleteControllerTest do
 
   import ReadySetGo.RaceSpaceFixtures
 
-  @create_attrs %{name: "some name", number: 42, wave_index: 42, start_time: ~N[2024-06-18 02:51:00.000000], t1_time: ~N[2024-06-18 02:51:00.000000], t2_time: ~N[2024-06-18 02:51:00.000000], end_time: ~N[2024-06-18 02:51:00.000000]}
-  @update_attrs %{name: "some updated name", number: 43, wave_index: 43, start_time: ~N[2024-06-19 02:51:00.000000], t1_time: ~N[2024-06-19 02:51:00.000000], t2_time: ~N[2024-06-19 02:51:00.000000], end_time: ~N[2024-06-19 02:51:00.000000]}
-  @invalid_attrs %{name: nil, number: nil, wave_index: nil, start_time: nil, t1_time: nil, t2_time: nil, end_time: nil}
+  @create_attrs %{
+    name: "some name",
+    number: 42,
+    wave: 42,
+    wave_index: 42,
+    start_time: ~N[2024-06-18 02:51:00.000000],
+    t1_time: ~N[2024-06-18 02:51:00.000000],
+    t2_time: ~N[2024-06-18 02:51:00.000000],
+    end_time: ~N[2024-06-18 02:51:00.000000]
+  }
+  @update_attrs %{
+    name: "some updated name",
+    number: 43,
+    wave: 42,
+    wave_index: 43,
+    start_time: ~N[2024-06-19 02:51:00.000000],
+    t1_time: ~N[2024-06-19 02:51:00.000000],
+    t2_time: ~N[2024-06-19 02:51:00.000000],
+    end_time: ~N[2024-06-19 02:51:00.000000]
+  }
+  @invalid_attrs %{
+    name: nil,
+    number: nil,
+    wave: nil,
+    wave_index: nil,
+    start_time: nil,
+    t1_time: nil,
+    t2_time: nil,
+    end_time: nil
+  }
 
   describe "index" do
     test "lists all athletes", %{conn: conn} do

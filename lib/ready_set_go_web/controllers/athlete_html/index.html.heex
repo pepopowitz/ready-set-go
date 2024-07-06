@@ -8,14 +8,33 @@
 </.header>
 
 <.table id="athletes" rows={@athletes} row_click={&JS.navigate(~p"/athletes/#{&1}")}>
-  <:col :let={athlete} label="Name"><%= athlete.name %></:col>
-  <:col :let={athlete} label="Number"><%= athlete.number %></:col>
-  <:col :let={athlete} label="Wave"><%= athlete.wave.name %></:col>
-  <:col :let={athlete} label="Wave index"><%= athlete.wave_index %></:col>
-  <:col :let={athlete} label="Start time"><%= athlete.start_time %></:col>
-  <:col :let={athlete} label="T1 time"><%= athlete.t1_time %></:col>
-  <:col :let={athlete} label="T2 time"><%= athlete.t2_time %></:col>
-  <:col :let={athlete} label="End time"><%= athlete.end_time %></:col>
+  <:col :let={athlete} label="Name">
+    <%= athlete.name %>
+  </:col>
+  <:col :let={athlete} label="Event">
+    <%= athlete.event.name %>
+  </:col>
+  <:col :let={athlete} label="Number">
+    <%= athlete.number %>
+  </:col>
+  <:col :let={athlete} label="Wave">
+    <%= athlete.wave %>
+  </:col>
+  <:col :let={athlete} label="Wave index">
+    <%= athlete.wave_index %>
+  </:col>
+  <:col :let={athlete} label="Start time">
+    <%= athlete.start_time %>
+  </:col>
+  <:col :let={athlete} label="T1 time">
+    <%= athlete.t1_time %>
+  </:col>
+  <:col :let={athlete} label="T2 time">
+    <%= athlete.t2_time %>
+  </:col>
+  <:col :let={athlete} label="End time">
+    <%= athlete.end_time %>
+  </:col>
   <:action :let={athlete}>
     <div class="sr-only">
       <.link navigate={~p"/athletes/#{athlete}"}>Show</.link>

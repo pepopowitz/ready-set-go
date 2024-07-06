@@ -7,7 +7,6 @@ defmodule ReadySetGo.TrackerSpace do
   alias ReadySetGo.Repo
 
   alias ReadySetGo.RaceSpace.Event
-  alias ReadySetGo.RaceSpace.Wave
   alias ReadySetGo.RaceSpace.Athlete
 
   # pubsub stuff so other liveviews can see the updates
@@ -55,8 +54,7 @@ defmodule ReadySetGo.TrackerSpace do
     query =
       from(e in Event,
         where: e.id == ^id,
-        join: w in assoc(e, :waves),
-        join: a in assoc(w, :athletes),
+        join: a in assoc(e, :athletes),
         order_by: [
           asc: is_nil(a.end_time),
           asc: fragment("? - ?", a.end_time, a.start_time),
@@ -66,10 +64,10 @@ defmodule ReadySetGo.TrackerSpace do
           asc: a.t1_time,
           asc: is_nil(a.start_time),
           asc: a.start_time,
-          asc: w.index,
+          asc: a.wave,
           asc: a.wave_index
         ],
-        preload: [waves: {w, athletes: a}]
+        preload: [athletes: a]
       )
 
     Repo.one!(query)
@@ -146,54 +144,6 @@ defmodule ReadySetGo.TrackerSpace do
     Event.changeset(tracker, attrs)
   end
 
-  def get_wave!(id) do
-    Repo.get!(Wave, id)
-  end
-
-  @doc """
-  Updates a wave.
-
-  ## Examples
-
-      iex> update_wave(wave, %{field: new_value})
-      {:ok, %Wave{}}
-
-      iex> update_wave(wave, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_wave(%Wave{} = wave, attrs) do
-    IO.puts("Updating wave")
-
-    wave
-    |> Wave.changeset(attrs)
-    |> Repo.update()
-  end
-
-  def maybe_start_wave?(wave_id, now) do
-    wave = get_wave!(wave_id)
-
-    if wave.start_time == nil do
-      wave
-      |> Wave.changeset(%{start_time: now})
-      |> Repo.update()
-    end
-  end
-
-  def maybe_rollback_wave?(wave_id) do
-    query = from(a in Athlete, where: a.wave_id == ^wave_id, where: not is_nil(a.start_time))
-
-    started_athletes = Repo.all(query)
-
-    if Enum.empty?(started_athletes) do
-      wave = get_wave!(wave_id)
-
-      wave
-      |> Wave.changeset(%{start_time: nil})
-      |> Repo.update()
-    end
-  end
-
   def get_athlete!(id) do
     Repo.get!(Athlete, id)
   end
@@ -216,8 +166,6 @@ defmodule ReadySetGo.TrackerSpace do
         |> Athlete.changeset(changes)
         |> Repo.update()
 
-      maybe_start_wave?(athlete.wave_id, now)
-
       notify(updated_athlete, :tracker_updated)
     end
   end
@@ -237,8 +185,6 @@ defmodule ReadySetGo.TrackerSpace do
         athlete
         |> Athlete.changeset(changes)
         |> Repo.update()
-
-      maybe_rollback_wave?(athlete.wave_id)
 
       notify(updated_athlete, :tracker_updated)
     end

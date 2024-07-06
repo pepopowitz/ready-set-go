@@ -6,7 +6,7 @@ defmodule ReadySetGo.RaceSpace.Event do
     field(:name, :string)
     field(:start_time, :naive_datetime_usec)
     field(:end_time, :naive_datetime_usec)
-    has_many :waves, ReadySetGo.RaceSpace.Wave
+    has_many :athletes, ReadySetGo.RaceSpace.Athlete
 
     timestamps(type: :utc_datetime)
   end
