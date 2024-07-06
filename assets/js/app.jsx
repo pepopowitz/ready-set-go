@@ -22,11 +22,33 @@ import { Socket } from 'phoenix';
 import { LiveSocket } from 'phoenix_live_view';
 import topbar from '../vendor/topbar';
 
-// sjh - imports
-import React from 'react';
-import ReactDOM from 'react-dom';
-import hello from './hello';
-import Greeting from './greeting';
+// sjh - custom hooks
+const Hooks = {
+  Timer: {
+    mounted() {
+      this.duration = this.el.dataset.duration;
+
+      this.timer = setInterval(() => {
+        let [minutes, seconds] = this.duration
+          .split(':')
+          .map((str) => parseInt(str, 10));
+        if (seconds === 59) {
+          minutes += 1;
+          seconds = 0;
+        } else {
+          seconds += 1;
+        }
+        this.duration = `${String(minutes).padStart(2, '0')}:${String(
+          seconds
+        ).padStart(2, '0')}`;
+        this.el.textContent = this.duration;
+      }, 1000);
+    },
+    destroyed() {
+      clearInterval(this.timer);
+    },
+  },
+};
 
 // phoenix things
 let csrfToken = document
@@ -35,6 +57,7 @@ let csrfToken = document
 let liveSocket = new LiveSocket('/live', Socket, {
   longPollFallbackMs: 2500,
   params: { _csrf_token: csrfToken },
+  hooks: Hooks,
 });
 
 // Show progress bar on live navigation and form submits
@@ -50,8 +73,3 @@ liveSocket.connect();
 // >> liveSocket.enableLatencySim(1000)  // enabled for duration of browser session
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket;
-
-// sjh starting here
-document.querySelector('#hello').innerHTML = hello('frienderino');
-const greetingRoot = ReactDOM.createRoot(document.getElementById('greeting'));
-greetingRoot.render(<Greeting name="special bunches" />);

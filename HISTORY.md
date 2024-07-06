@@ -365,7 +365,7 @@ finish-time:naive_datetime_usec
     1. [ ] Add admin user
     2. [ ] Hide buttons for non-admin user
 16. [ ] Sort properly by removing waves as an intermediary
-17. [ ] Show live timers
+17. [x] Show live timers
 18. [ ] Favicon
     1. [ ] logo
 19. [ ] results view

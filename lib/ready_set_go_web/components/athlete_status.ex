@@ -40,7 +40,12 @@ defmodule ReadySetGoWeb.AthleteStatus do
 
     ~H"""
     <div class="text-right text-brand">
-      <span class="inline-block align-middle font-bold">
+      <span
+        class="inline-block align-middle font-bold"
+        data-duration={@swim_duration}
+        phx-hook="Timer"
+        id={"swim-" <> Integer.to_string(@athlete.id)}
+      >
         <%= @swim_duration %>
       </span>
       <span class="text-2xl inline-block align-middle">
@@ -88,7 +93,12 @@ defmodule ReadySetGoWeb.AthleteStatus do
 
     ~H"""
     <div class="text-right text-brand">
-      <span class="inline-block align-middle font-bold">
+      <span
+        class="inline-block align-middle font-bold"
+        data-duration={@bike_duration}
+        phx-hook="Timer"
+        id={"bike-" <> Integer.to_string(@athlete.id)}
+      >
         <%= @bike_duration %>
       </span>
       <span class="text-2xl inline-block align-middle">
@@ -152,7 +162,12 @@ defmodule ReadySetGoWeb.AthleteStatus do
 
     ~H"""
     <div class="text-right text-brand">
-      <span class="inline-block align-middle text-brand font-bold">
+      <span
+        class="inline-block align-middle text-brand font-bold"
+        data-duration={@run_duration}
+        phx-hook="Timer"
+        id={"run-" <> Integer.to_string(@athlete.id)}
+      >
         <%= @run_duration %>
       </span>
       <span class="text-2xl inline-block align-middle">
@@ -217,7 +232,12 @@ defmodule ReadySetGoWeb.AthleteStatus do
 
     ~H"""
     <div class="text-right text-gray-400">
-      <span class="inline-block align-middle font-bold">
+      <span
+        class="inline-block align-middle font-bold"
+        data-duration={@total_duration}
+        phx-hook="Timer"
+        id={"total-" <> Integer.to_string(@athlete.id)}
+      >
         <%= @total_duration %>
       </span>
       <span class="text-2xl inline-block align-middle">
