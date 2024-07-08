@@ -2,17 +2,31 @@ defmodule ReadySetGoWeb.TrackLive.Show do
   use ReadySetGoWeb, :live_view
   # alias ReadySetGo.PubSub
   alias ReadySetGo.TrackerSpace
+  alias ReadySetGo.Accounts
   # alias ReadySetGo.TrackerSpace.Tracker
 
   @impl true
+  def mount(%{"id" => id}, %{"user_token" => user_token} = _session, socket) do
+    if connected?(socket), do: TrackerSpace.subscribe()
 
+    current_user = Accounts.get_user_by_session_token(user_token)
+
+    {:ok,
+     assign(socket, :event_id, id)
+     |> assign(:event, TrackerSpace.get_tracker!(id))
+     |> assign(:confirm_rollback, nil)
+     |> assign(:current_user, current_user)}
+  end
+
+  @impl true
   def mount(%{"id" => id}, _session, socket) do
     if connected?(socket), do: TrackerSpace.subscribe()
 
     {:ok,
      assign(socket, :event_id, id)
      |> assign(:event, TrackerSpace.get_tracker!(id))
-     |> assign(:confirm_rollback, nil)}
+     |> assign(:confirm_rollback, nil)
+     |> assign(:current_user, nil)}
   end
 
   @impl true

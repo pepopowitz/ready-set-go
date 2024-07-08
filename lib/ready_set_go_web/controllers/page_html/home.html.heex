@@ -44,20 +44,20 @@
         </.link>
       </div>
       <% end %>
-        <div class="flex items-center justify-center">
-          <div class="flex space-x-4">
-            <.link href={~p"/events"}
-              class="inline-block px-6 py-3 text-md font-semibold leading-6 bg-zinc-200 rounded-lg hover:bg-zinc-300 transition hover:scale-105">
-              Manage events
-            </.link>
+        <%= if @current_user do %>
+          <div class="flex items-center justify-center">
+            <div class="flex space-x-4">
+              <.link href={~p"/events"}
+                class="inline-block px-6 py-3 text-md font-semibold leading-6 bg-zinc-200 rounded-lg hover:bg-zinc-300 transition hover:scale-105">
+                Manage events
+              </.link>
 
-            <.link href={~p"/athletes"}
-              class="inline-block px-6 py-3 text-md font-semibold leading-6 bg-zinc-200 rounded-lg hover:bg-zinc-300 transition hover:scale-105">
-              Manage athletes
-            </.link>
+              <.link href={~p"/athletes"}
+                class="inline-block px-6 py-3 text-md font-semibold leading-6 bg-zinc-200 rounded-lg hover:bg-zinc-300 transition hover:scale-105">
+                Manage athletes
+              </.link>
+            </div>
           </div>
-        </div>
-        <p class="mt-2 text-md leading-5 hidden" id="hello" />
-        <section id="greeting" class="hidden" />
+          <% end %>
   </div>
 </div>
