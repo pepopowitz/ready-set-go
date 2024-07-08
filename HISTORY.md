@@ -361,10 +361,10 @@ finish-time:naive_datetime_usec
 13. [x] Show durations instead of timestamps
     1. [x] Sort by durations instead of timestamps
 14. [x] Make it harder to roll back an athlete
-15. [ ] Add auth
+15. [x] Add auth
     1. [ ] Add admin user
-    2. [ ] Hide buttons for non-admin user
-16. [ ] Sort properly by removing waves as an intermediary
+    2. [x] Hide buttons for non-admin user
+16. [x] Sort properly by removing waves as an intermediary
 17. [x] Show live timers
 18. [ ] Favicon
     1. [ ] logo
