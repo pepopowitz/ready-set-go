@@ -375,3 +375,18 @@ finish-time:naive_datetime_usec
     4. [ ] export data?
 20. ci deployment?
 21. known bug: :reset_confirm is never cancelled, and can cancel the next rollback request even after the original rollback is confirmed
+
+### After adding auth and deploying fresh
+
+- there is no camundathlon, so I need to add one
+  - go to /events to add it
+- no user
+  - go to /users/register to register
+  - registration action will fail, because it is trying to send email but I don't know how to configure that in gigalixir
+  - but the user still gets created
+    - if I wanted to update the `confirmed_at`, I could:
+      - connect remotely in a terminal with `gigalixir ps:remote_console`
+      - Find my user with `ReadySetGo.Repo.all(ReadySetGo.Accounts.User)`
+      - get that specific user, and update the `confirmed_at` field.
+  - I can then log in with that user, and see the things I need auth for.
+- from here, I can re-add all the athletes and things work.
