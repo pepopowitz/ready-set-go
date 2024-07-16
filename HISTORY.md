@@ -385,7 +385,7 @@ finish-time:naive_datetime_usec
 ## Post-race tasks
 
 1. [x] Add quickstart to readme
-2. Seed data: camundathlon, admin user, and a few athletes.
+2. [x] Seed data: camundathlon, admin user, and a few athletes.
 3. Add auth gate for admin pages
 
 ## Backlog?
