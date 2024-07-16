@@ -52,7 +52,7 @@ ReadySetGo.Repo.insert!(%ReadySetGo.RaceSpace.Athlete{
 
 # then an admin user
 user_attrs = %{
-  email: "readysetgo@mailinator.com",
+  email: "readysetgo@example.com",
   password: "letsrace!!!!!"
 }
 

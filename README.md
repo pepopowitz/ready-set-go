@@ -30,7 +30,7 @@ An app for timing and tracking a triathlon, built with [Phoenix](https://www.pho
    - seed data
      - a Camundathlon event
      - multiple athletes for that event
-     - an admin user with credentials `readysetgo@mailinator.com` / `letsrace!!!!!`
+     - an admin user with credentials `readysetgo@example.com` / `letsrace!!!!!`
 
 4. Run locally
 
