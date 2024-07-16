@@ -366,15 +366,6 @@ finish-time:naive_datetime_usec
     2. [x] Hide buttons for non-admin user
 16. [x] Sort properly by removing waves as an intermediary
 17. [x] Show live timers
-18. [ ] Favicon
-    1. [ ] logo
-19. [ ] results view
-    1. [ ] name, total time, place
-    2. [ ] swim time, bike time, run time
-    3. [ ] sort by column?
-    4. [ ] export data?
-20. ci deployment?
-21. known bug: :reset_confirm is never cancelled, and can cancel the next rollback request even after the original rollback is confirmed
 
 ### After adding auth and deploying fresh
 
@@ -390,3 +381,21 @@ finish-time:naive_datetime_usec
       - get that specific user, and update the `confirmed_at` field.
   - I can then log in with that user, and see the things I need auth for.
 - from here, I can re-add all the athletes and things work.
+
+## Post-race tasks
+
+1. [x] Add quickstart to readme
+2. Seed data: camundathlon, admin user, and a few athletes.
+3. Add auth gate for admin pages
+
+## Backlog?
+
+1.  [ ] Favicon
+    1. [ ] logo
+2.  [ ] results view
+    1. [ ] name, total time, place
+    2. [ ] swim time, bike time, run time
+    3. [ ] sort by column?
+    4. [ ] export data?
+3.  ci deployment?
+4.  known bug: :reset_confirm is never cancelled, and can cancel the next rollback request even after the original rollback is confirmed
