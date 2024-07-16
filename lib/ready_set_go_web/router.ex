@@ -22,12 +22,15 @@ defmodule ReadySetGoWeb.Router do
 
     get("/", PageController, :home)
 
+    live("/track/:id", TrackLive.Show, :show)
+  end
+
+  # require auth for admin pages
+  scope "/", ReadySetGoWeb do
+    pipe_through [:browser, :require_authenticated_user]
+
     resources "/events", EventController
     resources "/athletes", AthleteController
-
-    live("/trackers", TrackerLive.Index, :index)
-
-    live("/track/:id", TrackLive.Show, :show)
   end
 
   # Other scopes may use custom stacks.
