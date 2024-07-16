@@ -26,7 +26,7 @@
             </div>
             <ReadySetGoWeb.AthleteStatus.status athlete={athlete} />
 
-            <%= if @current_user do %>
+            <%= if @current_user && @event.end_time==nil do %>
               <div class="actions mt-4 flex justify-between">
                 <button phx-click="rollback_athlete" phx-value-id={athlete.id}
                   class="bg-gray-200 hover:bg-gray-400 text-red-700 font-bold py-2 px-4 rounded">

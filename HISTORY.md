@@ -305,6 +305,7 @@ I used a mish mash of resources to get started with this app.
 - annoying thing -- prettier wants me to use parens for every function call; phx generates ruby-like calls without parens. How do I get prettier to use the phx standard?
 - a nice article about pros/cons of elixir/phoenix ecosystem: https://www.sean-lawrence.com/things-to-consider-before-starting-an-elixir-phoenix-project/
 - deploy to gigalixir: `git push gigalixir`
+- run in a gigalixir remote console: `gigalixir ps:remote_console`
 
 ## Schema
 
@@ -386,7 +387,8 @@ finish-time:naive_datetime_usec
 
 1. [x] Add quickstart to readme
 2. [x] Seed data: camundathlon, admin user, and a few athletes.
-3. Add auth gate for admin pages
+3. [x] Add auth gate for admin pages
+4. [x] Lock athlete actions when event is complete
 
 ## Backlog?
 
